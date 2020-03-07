@@ -7,26 +7,24 @@ from feedgen.feed import FeedGenerator
 from mutagen.mp3 import MP3
 import pytz
 
-def main():
+def main(
+        
     # ----------------------------------
     # Configure variables for the feed
     # ----------------------------------
     # Base URL for where the podcast files and feed will ultimately live
-    base_url = 'http://files.example.com/fauxcasts/book_name/'
+    base_url = 'http://files.example.com/fauxcasts/book_name/',
 
     # Name for the RSS file
-    feed_name = 'feed.rss'
-    feed_url = base_url + feed_name
+    feed_name = 'feed.rss',
 
     # Information about the podcast
-    feed_title = 'Podcast title'
-    feed_description = "Description of podcast"
-    feed_author = 'Some name here'
-    feed_author_email = 'blah@example.com'
-    feed_homepage = 'http://www.example.com'
+    feed_title = 'Podcast title',
+    feed_description = "Description of podcast",
+    feed_author = 'Some name here',
+    feed_author_email = 'blah@example.com',
+    feed_homepage = 'http://www.example.com',
 
-    # Name of the pre-uploaded podcast cover image
-    cover_image = base_url + 'cover.jpg'
 
     # Absolute or relateive path to MP3 files on your local computer
     #
@@ -39,8 +37,12 @@ def main():
     # If you want, you can change the regular expression that parses these
     # filenames below at `track_name_raw = re.match(...)`
     # local_location = '/path/to/ripped/mp3s/*.mp3'
-    local_location = 'path/to/mp3_files/*.mp3'
+    *local_files
+        ):
 
+    feed_url = base_url + feed_name,
+    # Name of the pre-uploaded podcast cover image
+    cover_image = base_url + 'cover.jpg',
 
     # ----------------------
     # Generate actual feed
@@ -63,7 +65,7 @@ def main():
 
 
     # Loop through each MP3 and add it to the feed as an episode
-    for i, track in enumerate(sorted(glob.glob(local_location))):
+    for i, track in enumerate(sorted(local_files)):
         # Some podcast players respect the itunes_order attribute, which is set
         # below, but many only look at the date and time of the episode. So, here
         # we pretend that the first episode happened 7 days ago, and each
@@ -105,6 +107,6 @@ def main():
     fg.rss_file(feed_name, pretty=True)
 
 
-if __name__ == 'main':
+if __name__ == '__main__':
     import fire
     fire.Fire(main)
