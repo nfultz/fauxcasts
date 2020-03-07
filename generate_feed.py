@@ -8,6 +8,19 @@ from mutagen.mp3 import MP3
 import pytz
 
 def main(
+
+    # Absolute or relateive path to MP3 files on your local computer
+    #
+    # NB: Use the *.mp3 syntax to select and parse all MP3s in the folder
+    # Also NB: Make sure each file follows this naming convention:
+    #   n-xx Name of the track.mp3
+    # where `n` is the disc number (e.g. 1), and `xx` is the track number (e.g. 07)
+    #   Example: 2-14 Act IV Scene iii.mp3
+    #
+    # If you want, you can change the regular expression that parses these
+    # filenames below at `track_name_raw = re.match(...)`
+    # local_location = '/path/to/ripped/mp3s/*.mp3'
+    *local_files,
         
     # ----------------------------------
     # Configure variables for the feed
@@ -23,26 +36,13 @@ def main(
     feed_description = "Description of podcast",
     feed_author = 'Some name here',
     feed_author_email = 'blah@example.com',
-    feed_homepage = 'http://www.example.com',
+    feed_homepage = 'http://www.example.com'
 
-
-    # Absolute or relateive path to MP3 files on your local computer
-    #
-    # NB: Use the *.mp3 syntax to select and parse all MP3s in the folder
-    # Also NB: Make sure each file follows this naming convention:
-    #   n-xx Name of the track.mp3
-    # where `n` is the disc number (e.g. 1), and `xx` is the track number (e.g. 07)
-    #   Example: 2-14 Act IV Scene iii.mp3
-    #
-    # If you want, you can change the regular expression that parses these
-    # filenames below at `track_name_raw = re.match(...)`
-    # local_location = '/path/to/ripped/mp3s/*.mp3'
-    *local_files
         ):
 
-    feed_url = base_url + feed_name,
+    feed_url = base_url + feed_name
     # Name of the pre-uploaded podcast cover image
-    cover_image = base_url + 'cover.jpg',
+    cover_image = base_url + 'cover.jpg'
 
     # ----------------------
     # Generate actual feed
@@ -80,8 +80,7 @@ def main(
         # Remove the disk and track numbers from the file names and use just the
         # title as the episode name
         track_filename = os.path.basename(track)
-        track_name_raw = re.match(r"\d-\d{2} (.*)\.mp3", track_filename)
-        track_name = track_name_raw.group(1)
+        track_name = track_filename
 
         # Get the duration
         audio = MP3(track)
