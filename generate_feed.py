@@ -79,17 +79,20 @@ def main(
 
         # Remove the disk and track numbers from the file names and use just the
         # title as the episode name
-        track_filename = os.path.basename(track)
+        track_filename = track
         track_name = track_filename
 
         # Get the duration
-        audio = MP3(track)
-        m, s = divmod(audio.info.length, 60)  # Convert seconds to h:m:s
-        h, m = divmod(m, 60)
-        if h == 0:
-            duration = "%02d:%02d" % (m, s)
-        else:
-            duration = "%d:%02d:%02d" % (h, m, s)
+        try :
+            audio = MP3(track)
+            m, s = divmod(audio.info.length, 60)  # Convert seconds to h:m:s
+            h, m = divmod(m, 60)
+            if h == 0:
+                duration = "%02d:%02d" % (m, s)
+            else:
+                duration = "%d:%02d:%02d" % (h, m, s)
+        except :
+            duration = "99:99"
 
         # Generate entry
         fe = fg.add_entry()
